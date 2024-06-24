@@ -1,0 +1,67 @@
+node {
+    def PROG = "${JOB_NAME}"
+    def RESULT = "Results_${PROG}"
+    def PARENT_PROJECT = "/public/${PROG}"
+    
+    // Polyspace Installation Settings
+    def polyspace_bin = "/usr/local/Polyspace_Server/R2020a/polyspace/bin"
+    def configure = "${polyspace_bin}/polyspace-configure"
+    def analyze = "${polyspace_bin}/polyspace-bug-finder-server"
+    def access = "${polyspace_bin}/polyspace-access"
+        
+    // repository settings
+    def git_url = "https://insidelabs-git.mathworks.com/polyspacers/example_picontrol.git"
+    
+    // PS analysis options file (generated)
+    def configure_opts = "${PROG}.opts"
+   
+    // email options
+    def mailsubject = "Polyspace analysis of ${PROG}"
+    def mailbody = "Log available on ${BUILD_URL}/console"
+    def mailto = "mbecker@mathworks.com"
+    
+    // PS Access settings
+    def protocol = "http" //Replace with "https" if Polyspace Access URL uses https
+    def host = "localhost"
+    def port = "9443"
+    
+    
+    stage ("Prepare") {
+        sh script: "env"
+    }
+    
+    stage ("Checkout") {
+        git "$git_url"
+    }
+    
+    stage ("Configure") {
+        sh label: "Cleanup", script: "make clean"
+        sh label: "Polyspace configure", script: "$configure -allow-build-error -allow-overwrite -lang cpp -prog $PROG -output-options-file ${PROG}.opts make"
+    }
+    
+    stage ("Analyze") {
+        sh label: "Polyspace analysis",
+        script: "$analyze -options-file ${PROG}.opts -options-file global_options.opts -results-dir $RESULT"
+    }
+    
+    withCredentials([usernamePassword(credentialsId: 'martin-psaccess', passwordVariable: 'password', usernameVariable: 'username')]) // credentialsId is column "ID" in Jenkins, not the user name!
+    {
+        def cmd_access = "$access -protocol ${protocol} -host ${host} -port ${port} -login ${username} -encrypted-password ${password}"
+    
+        stage ("Upload Results") {
+            sh label: "Create folder on server", script: "$cmd_access -create-project $PARENT_PROJECT"
+            sh label: "Upload results on server", script: "$cmd_access -parent-project $PARENT_PROJECT -upload $RESULT -project $PROG"
+        }
+        
+        stage ("Filter Results") {
+            sh label: "Filter results", script: "$cmd_access -export $PARENT_PROJECT/$PROG -output Results_High.tsv -defects High"
+        }
+    }
+    
+    stage ("Notification") {
+        emailext body: "$mailbody", 
+        subject: "$mailsubject", 
+        to: "$mailto",
+        attachmentsPattern: "Results_High.tsv"
+    }
+}

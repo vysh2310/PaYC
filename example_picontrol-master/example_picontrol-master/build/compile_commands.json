@@ -1,0 +1,37 @@
+[
+{
+  "directory": "/home/matlab/example_picontrol/build",
+  "command": "/usr/bin/cc   -I/home/matlab/example_picontrol  -g   -o CMakeFiles/runpid.dir/pi_app/pi_main.c.o   -c /home/matlab/example_picontrol/pi_app/pi_main.c",
+  "file": "/home/matlab/example_picontrol/pi_app/pi_main.c"
+},
+{
+  "directory": "/home/matlab/example_picontrol/build",
+  "command": "/usr/bin/cc   -I/home/matlab/example_picontrol  -g   -o CMakeFiles/runpid.dir/pi_app/pi_globals.c.o   -c /home/matlab/example_picontrol/pi_app/pi_globals.c",
+  "file": "/home/matlab/example_picontrol/pi_app/pi_globals.c"
+},
+{
+  "directory": "/home/matlab/example_picontrol/build",
+  "command": "/usr/bin/cc   -I/home/matlab/example_picontrol  -g   -o CMakeFiles/runpid.dir/pi_log/pi_log.c.o   -c /home/matlab/example_picontrol/pi_log/pi_log.c",
+  "file": "/home/matlab/example_picontrol/pi_log/pi_log.c"
+},
+{
+  "directory": "/home/matlab/example_picontrol/build",
+  "command": "/usr/bin/cc   -I/home/matlab/example_picontrol  -g   -o CMakeFiles/runpid.dir/pi_reset/pi_reset.c.o   -c /home/matlab/example_picontrol/pi_reset/pi_reset.c",
+  "file": "/home/matlab/example_picontrol/pi_reset/pi_reset.c"
+},
+{
+  "directory": "/home/matlab/example_picontrol/build",
+  "command": "/usr/bin/cc   -I/home/matlab/example_picontrol  -g   -o CMakeFiles/runpid.dir/pi_task/pi_task.c.o   -c /home/matlab/example_picontrol/pi_task/pi_task.c",
+  "file": "/home/matlab/example_picontrol/pi_task/pi_task.c"
+},
+{
+  "directory": "/home/matlab/example_picontrol/build",
+  "command": "/usr/bin/cc   -I/home/matlab/example_picontrol  -g   -o CMakeFiles/runpid.dir/pi_task/pi_utils.c.o   -c /home/matlab/example_picontrol/pi_task/pi_utils.c",
+  "file": "/home/matlab/example_picontrol/pi_task/pi_utils.c"
+},
+{
+  "directory": "/home/matlab/example_picontrol/build",
+  "command": "/usr/bin/cc   -I/home/matlab/example_picontrol  -g   -o CMakeFiles/runpid.dir/pi_alg/pi_alg.c.o   -c /home/matlab/example_picontrol/pi_alg/pi_alg.c",
+  "file": "/home/matlab/example_picontrol/pi_alg/pi_alg.c"
+}
+]
